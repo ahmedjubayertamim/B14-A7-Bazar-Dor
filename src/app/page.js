@@ -1,33 +1,44 @@
 
+import { Suspense } from "react";
+import Navbar from "@/components/Navbar";
 import { getProducts } from "@/lib/api";
 
-export default async function Home() {
+async function MarketContent() {
   try {
     const products = await getProducts();
 
     return (
-      <main className="min-h-screen bg-gray-50 p-8">
-        <h1 className="mb-6 text-3xl font-bold">
-          🛒 বাজার দর
-        </h1>
+      <>
+        <Navbar products={products} />
 
-        <h2 className="mb-4 text-xl font-semibold">
-          API Test
-        </h2>
+        <main className="mx-auto max-w-6xl px-4 py-10">
+          <h1 className="text-3xl font-bold text-gray-900">
+            আজকের বাজার দর
+          </h1>
 
-        <pre className="overflow-auto rounded-lg bg-white p-5 text-sm shadow">
-          {JSON.stringify(products, null, 2)}
-        </pre>
-      </main>
+          <p className="mt-3 text-gray-600">
+            প্রতিদিনের নিত্যপ্রয়োজনীয় পণ্যের দাম জানুন।
+          </p>
+
+          <p className="mt-6 text-green-700">
+            মোট পণ্য: {new Intl.NumberFormat("bn-BD").format(products.length)}
+          </p>
+        </main>
+      </>
     );
-  } catch (error) {
+  } catch {
     return (
-      <main className="p-8">
-        <h1 className="text-2xl font-bold text-red-600">
-          API Connection Failed
-        </h1>
-        <p>{error.message}</p>
+      <main className="p-8 text-red-600">
+        পণ্যের তথ্য লোড করা যায়নি। আবার চেষ্টা করুন।
       </main>
     );
   }
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="p-8">লোড হচ্ছে...</div>}>
+      <MarketContent />
+    </Suspense>
+  );
 }
