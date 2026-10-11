@@ -24,3 +24,31 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes bazar-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.bazar-ticker {
+  animation: bazar-scroll 45s linear infinite;
+}
+
+.bazar-ticker:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bazar-ticker {
+    animation: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
