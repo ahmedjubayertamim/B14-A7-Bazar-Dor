@@ -3,8 +3,11 @@
 
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import SocialAuthButtons from "@/components/SocialAuthButtons";
+import { getAuthErrorMessage } from "@/lib/auth-error";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -16,28 +19,44 @@ export default function SignInPage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail || !password) {
+      const validationMessage = "ইমেইল ও পাসওয়ার্ড দিন।";
+      setMessage(validationMessage);
+      toast.error(validationMessage);
+      return;
+    }
+
     setLoading(true);
     setMessage("");
 
     try {
       const result = await authClient.signIn.email({
-        email: email.trim(),
+        email: trimmedEmail,
         password,
       });
 
       if (result.error) {
-        setMessage(
-          result.error.message || "Sign in failed."
+        const errorMessage = getAuthErrorMessage(
+          result.error,
+          "সাইন ইন করা যায়নি।"
         );
+        setMessage(errorMessage);
+        toast.error(errorMessage);
         return;
       }
 
+      toast.success("সফলভাবে সাইন ইন হয়েছে।");
       router.push("/");
       router.refresh();
     } catch (error) {
-      setMessage(
-        error.message || "Something went wrong."
+      const errorMessage = getAuthErrorMessage(
+        error,
+        "সাইন ইন করার সময় সমস্যা হয়েছে।"
       );
+      setMessage(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -110,8 +129,10 @@ export default function SignInPage() {
           </button>
         </form>
 
+        <SocialAuthButtons />
+
         <p className="mt-6 text-center text-sm text-gray-600">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href="/signup"
             className="font-semibold text-green-700 hover:underline"

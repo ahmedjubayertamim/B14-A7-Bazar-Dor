@@ -5,6 +5,24 @@ const BASE_URL =
 const BACKUP_URL =
   "https://api.api-store.workers.dev/api/bazardor";
 
+function extractCollection(payload, collectionName) {
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  if (Array.isArray(payload?.data)) {
+    return payload.data;
+  }
+
+  if (Array.isArray(payload?.[collectionName])) {
+    return payload[collectionName];
+  }
+
+  throw new Error(
+    `API response did not contain a valid ${collectionName} array`
+  );
+}
+
 async function request(endpoint) {
   for (const baseUrl of [BASE_URL, BACKUP_URL]) {
     try {
@@ -25,7 +43,8 @@ async function request(endpoint) {
   }
 }
 
-export const getProducts = () => request("/products");
+export const getProducts = async () =>
+  extractCollection(await request("/products"), "products");
 
 export const getCategories = () => request("/categories");
 

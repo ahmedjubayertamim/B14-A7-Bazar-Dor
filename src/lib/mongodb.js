@@ -16,6 +16,10 @@ globalForMongo._bazarMongoClient ??= new MongoClient(uri, {
 
 export const mongoClient = globalForMongo._bazarMongoClient;
 
-export const db = mongoClient.db(
-  process.env.MONGODB_DB || "bazardor-auth"
-);
+const databaseName = process.env.MONGODB_DB;
+
+if (!databaseName && process.env.NODE_ENV === "production") {
+  throw new Error("MONGODB_DB is missing");
+}
+
+export const db = mongoClient.db(databaseName || "bazardor-auth");

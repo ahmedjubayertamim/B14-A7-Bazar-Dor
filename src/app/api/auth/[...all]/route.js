@@ -1,4 +1,14 @@
-﻿import { auth } from "@/lib/auth";
+import { auth, validateAuthEnvironment } from "@/lib/auth";
 import { toNextJsHandler } from "better-auth/next-js";
 
-export const { GET, POST } = toNextJsHandler(auth);
+const { GET: betterAuthGET, POST: betterAuthPOST } = toNextJsHandler(auth);
+
+export async function GET(request) {
+  validateAuthEnvironment();
+  return betterAuthGET(request);
+}
+
+export async function POST(request) {
+  validateAuthEnvironment();
+  return betterAuthPOST(request);
+}

@@ -3,8 +3,14 @@
 
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import SocialAuthButtons from "@/components/SocialAuthButtons";
+import { getAuthErrorMessage } from "@/lib/auth-error";
 
 export default function SignupPage() {
+  const router = useRouter();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -24,6 +30,23 @@ export default function SignupPage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    const name = form.name.trim();
+    const email = form.email.trim();
+
+    if (!name || !email || !form.password) {
+      const validationMessage = "নাম, ইমেইল ও পাসওয়ার্ড পূরণ করুন।";
+      setMessage(validationMessage);
+      toast.error(validationMessage);
+      return;
+    }
+
+    if (form.password.length < 8) {
+      const validationMessage =
+        "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।";
+      setMessage(validationMessage);
+      toast.error(validationMessage);
+      return;
+    }
 
     setMessage("");
     setSuccess(false);
@@ -31,30 +54,36 @@ export default function SignupPage() {
 
     try {
       const result = await authClient.signUp.email({
-        name: form.name.trim(),
-        email: form.email.trim(),
+        name,
+        email,
         password: form.password,
       });
 
       if (result.error) {
-        setMessage(
-          result.error.message || "Account creation failed."
+        const errorMessage = getAuthErrorMessage(
+          result.error,
+          "অ্যাকাউন্ট তৈরি করা যায়নি।"
         );
+        setMessage(errorMessage);
+        toast.error(errorMessage);
         return;
       }
 
       setSuccess(true);
-      setMessage("Account created successfully!");
+      setMessage("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!");
+      toast.success("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।");
 
       setForm({
         name: "",
         email: "",
         password: "",
       });
+      router.push("/");
+      router.refresh();
     } catch (error) {
-      setMessage(
-        error.message || "Something went wrong. Please try again."
-      );
+      const errorMessage = getAuthErrorMessage(error, "আবার চেষ্টা করুন।");
+      setMessage(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -160,14 +189,16 @@ export default function SignupPage() {
           </button>
         </form>
 
+        <SocialAuthButtons />
+
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <a
+          <Link
             href="/signin"
             className="font-semibold text-green-700 hover:underline"
           >
             Sign In
-          </a>
+          </Link>
         </p>
       </div>
     </main>
