@@ -13,6 +13,10 @@ const messages = {
   PROVIDER_NOT_FOUND: "এই সামাজিক লগইনটি এখন কনফিগার করা হয়নি।",
   OAUTH_PROVIDER_NOT_FOUND: "এই সামাজিক লগইনটি এখন কনফিগার করা হয়নি।",
   SOCIAL_PROVIDER_NOT_FOUND: "এই সামাজিক লগইনটি এখন কনফিগার করা হয়নি।",
+  ACCOUNT_NOT_LINKED:
+    "এই ইমেইলের একটি অ্যাকাউন্ট আগে থেকেই আছে। সামাজিক লগইনটি এখন সংযুক্ত করা যায়নি।",
+  ACCOUNT_NOT_LINKED_TO_USER:
+    "এই ইমেইলের একটি অ্যাকাউন্ট আগে থেকেই আছে। সামাজিক লগইনটি এখন সংযুক্ত করা যায়নি।",
   FAILED_TO_CREATE_USER:
     "অ্যাকাউন্ট তৈরি করা যায়নি। MongoDB connection ও environment variables যাচাই করুন।",
   FAILED_TO_CREATE_SESSION:
