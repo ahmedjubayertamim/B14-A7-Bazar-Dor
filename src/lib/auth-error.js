@@ -1,28 +1,29 @@
 const messages = {
-  USER_ALREADY_EXISTS: "এই ইমেইল দিয়ে আগে থেকেই অ্যাকাউন্ট আছে। সাইন ইন করুন।",
+  USER_ALREADY_EXISTS:
+    "An account with this email already exists. Please sign in.",
   USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL:
-    "এই ইমেইল দিয়ে আগে থেকেই অ্যাকাউন্ট আছে। সাইন ইন করুন।",
-  INVALID_EMAIL: "সঠিক ইমেইল ঠিকানা দিন।",
-  PASSWORD_TOO_SHORT: "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।",
-  PASSWORD_TOO_LONG: "পাসওয়ার্ডটি অনেক বড়।",
-  INVALID_EMAIL_OR_PASSWORD: "ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।",
-  INVALID_PASSWORD: "ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।",
+    "An account with this email already exists. Please sign in.",
+  INVALID_EMAIL: "Please enter a valid email address.",
+  PASSWORD_TOO_SHORT: "The password must be at least 8 characters long.",
+  PASSWORD_TOO_LONG: "The password is too long.",
+  INVALID_EMAIL_OR_PASSWORD: "The email or password is incorrect.",
+  INVALID_PASSWORD: "The email or password is incorrect.",
   INVALID_ORIGIN:
-    "এই সাইটের ঠিকানা অনুমোদিত নয়। Vercel authentication configuration যাচাই করুন।",
-  INVALID_CALLBACK_URL: "OAuth callback URL অনুমোদিত নয়।",
-  PROVIDER_NOT_FOUND: "এই সামাজিক লগইনটি এখন কনফিগার করা হয়নি।",
-  OAUTH_PROVIDER_NOT_FOUND: "এই সামাজিক লগইনটি এখন কনফিগার করা হয়নি।",
-  SOCIAL_PROVIDER_NOT_FOUND: "এই সামাজিক লগইনটি এখন কনফিগার করা হয়নি।",
+    "This site origin is not authorized. Check the Vercel authentication configuration.",
+  INVALID_CALLBACK_URL: "The OAuth callback URL is not authorized.",
+  PROVIDER_NOT_FOUND: "This social login provider is not configured.",
+  OAUTH_PROVIDER_NOT_FOUND: "This social login provider is not configured.",
+  SOCIAL_PROVIDER_NOT_FOUND: "This social login provider is not configured.",
   ACCOUNT_NOT_LINKED:
-    "এই ইমেইলের একটি অ্যাকাউন্ট আগে থেকেই আছে। সামাজিক লগইনটি এখন সংযুক্ত করা যায়নি।",
+    "An account with this email already exists, but the social login could not be linked.",
   ACCOUNT_NOT_LINKED_TO_USER:
-    "এই ইমেইলের একটি অ্যাকাউন্ট আগে থেকেই আছে। সামাজিক লগইনটি এখন সংযুক্ত করা যায়নি।",
+    "An account with this email already exists, but the social login could not be linked.",
   FAILED_TO_CREATE_USER:
-    "অ্যাকাউন্ট তৈরি করা যায়নি। MongoDB connection ও environment variables যাচাই করুন।",
+    "The account could not be created. Check the MongoDB connection and environment variables.",
   FAILED_TO_CREATE_SESSION:
-    "সেশন তৈরি করা যায়নি। Better Auth configuration যাচাই করুন।",
+    "The session could not be created. Check the Better Auth configuration.",
   FAILED_TO_CREATE_ACCOUNT:
-    "অ্যাকাউন্ট তৈরি করা যায়নি। MongoDB connection ও environment variables যাচাই করুন।",
+    "The account could not be created. Check the MongoDB connection and environment variables.",
 };
 
 export function getAuthErrorMessage(error, fallback) {
