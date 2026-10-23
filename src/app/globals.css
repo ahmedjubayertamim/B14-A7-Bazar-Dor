@@ -39,7 +39,7 @@ body {
   display: flex;
   width: max-content;
   white-space: nowrap;
-  animation: none;
+  animation: bazar-scroll 60s linear infinite;
 }
 
 .bazar-ticker-group {
@@ -48,14 +48,8 @@ body {
   gap: 2.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .bazar-ticker {
-    animation: bazar-scroll 60s linear infinite;
-  }
-
-  .bazar-ticker:hover {
-    animation-play-state: paused;
-  }
+.bazar-ticker:hover {
+  animation-play-state: paused;
 }
 
 html {
